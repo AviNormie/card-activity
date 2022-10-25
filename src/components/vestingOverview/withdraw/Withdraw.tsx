@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 
+import { Button } from '../../button/Button';
 import { ClipLoader } from 'react-spinners';
 import { GradientButton } from '../../button/gradient/GradientButton';
 import { GradientButtonWithIcon } from '../../button/gradient/GradientButtonWithIcon';
@@ -15,9 +16,10 @@ import { useTokenClaim } from '../../../hooks/use-token-claim';
 interface Props {
     data: IVestingSchedule[];
     isLoading: boolean;
+    refresh: () => void;
 }
 
-export const Withdraw = ({ data, isLoading }: Props) => {
+export const Withdraw = ({ data, isLoading, refresh }: Props) => {
     const { library, account, activateProvider } =
         useContext(WalletConnectContext);
     const [isClaiming, setIsClaiming] = useState(false);
@@ -41,10 +43,11 @@ export const Withdraw = ({ data, isLoading }: Props) => {
 
     const onWithdrawClick = async () => {
         setIsClaiming(true);
-        if (library) {
-            await claimAllTokens(library);
+        if (library && account) {
+            await claimAllTokens(library.getSigner(account));
+            setIsClaiming(false);
+            refresh();
         }
-        setIsClaiming(false);
     };
 
     const activate = async () => {
@@ -54,7 +57,7 @@ export const Withdraw = ({ data, isLoading }: Props) => {
     return (
         <div className="w-full bg-black-700 rounded-[30px] inset-shadow relative">
             <div
-                className={`w-full flex flex-col items-center justify-between px-8 py-6 ${
+                className={`w-full flex flex-col items-center justify-between px-8 py-6 overflow-auto ${
                     account ? '' : 'blur-sm'
                 }`}
             >
@@ -120,14 +123,24 @@ export const Withdraw = ({ data, isLoading }: Props) => {
                                     disabled={true}
                                 />
                             ) : (
-                                <GradientButton
-                                    size="small"
-                                    disabled={false}
-                                    text={`WITHDRAW ${
-                                        totalUnlocked - totalWithdrawn
-                                    } LAKE`}
-                                    onClick={onWithdrawClick}
-                                />
+                                <>
+                                    {totalUnlocked - totalWithdrawn === 0 ? (
+                                        <Button
+                                            disabled={true}
+                                            text="NOTHING TO WITHDRAW"
+                                            size="small"
+                                        />
+                                    ) : (
+                                        <GradientButton
+                                            size="small"
+                                            disabled={false}
+                                            text={`WITHDRAW ${
+                                                totalUnlocked - totalWithdrawn
+                                            } LAKE`}
+                                            onClick={onWithdrawClick}
+                                        />
+                                    )}
+                                </>
                             )}
                         </div>
                     </>

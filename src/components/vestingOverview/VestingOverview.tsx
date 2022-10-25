@@ -15,6 +15,7 @@ export const VestingOverview = () => {
         IVestingSchedule[]
     >([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [refresh, setRefresh] = useState(0);
     const { getBeneficiaryOverview } = useBeneficiaryOverview();
 
     useEffect(() => {
@@ -35,7 +36,7 @@ export const VestingOverview = () => {
             setIsLoading(true);
             fetchData(library, account).catch(console.error);
         }
-    }, [library, account]);
+    }, [library, account, refresh]);
 
     return (
         <div className="w-full h-full flex justify-between">
@@ -46,7 +47,11 @@ export const VestingOverview = () => {
                 />
             </div>
             <div className="w-[21%]">
-                <Withdraw data={vestingSchedules} isLoading={isLoading} />
+                <Withdraw
+                    data={vestingSchedules}
+                    isLoading={isLoading}
+                    refresh={() => setRefresh(new Date().getTime())}
+                />
             </div>
         </div>
     );

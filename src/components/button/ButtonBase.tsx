@@ -1,17 +1,35 @@
 import { ReactNode } from 'react';
-import styled from 'styled-components';
+import { Size } from './Button';
 import { colors } from '../../constants/colors';
+import styled from 'styled-components';
 
 interface Props {
+    size: Size;
     disabled: boolean;
     children: ReactNode;
     onClick?: () => void;
 }
 
-export const ButtonBase = ({ disabled, children, onClick }: Props) => (
+export const ButtonBase = ({ size, disabled, children, onClick }: Props) => (
     <button disabled={disabled} onClick={onClick}>
-        <GradientBorder className="min-w-[17rem] h-[4rem] p-px flex justify-center items-center rounded-[32px]">
-            <div className="w-full h-full flex justify-center items-center rounded-[32px] bg-black-500 px-8">
+        <GradientBorder
+            className={`${
+                size === 'small'
+                    ? 'min-w-[12rem] h-[3rem]'
+                    : size === 'medium'
+                    ? 'min-w-[14rem] h-[3rem]'
+                    : 'min-w-[17rem] h-[4rem]'
+            } p-px flex justify-center items-center rounded-[32px]`}
+        >
+            <div
+                className={`w-full h-full flex justify-center items-center rounded-[32px] bg-black-500 ${
+                    size === 'small'
+                        ? 'px-2'
+                        : size === 'medium'
+                        ? 'px-4'
+                        : 'px-6'
+                }`}
+            >
                 {children}
             </div>
         </GradientBorder>
