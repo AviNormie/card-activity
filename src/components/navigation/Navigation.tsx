@@ -3,8 +3,10 @@ import { ASSET_ETH, ASSET_LAKE } from '../../constants/assets';
 import { Button } from '../button/Button';
 import { ButtonWithIcon } from '../button/ButtonWithIcon';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { GradientBorder } from '../GradientBorder';
 import { GradientButtonWithIcon } from '../button/gradient/GradientButtonWithIcon';
 import { WalletConnectContext } from '../../context';
+import cancelIcon from './../../assets/icons/cancel-icon.svg';
 import copyIcon from './../../assets/icons/copy-icon.svg';
 import { formatAddress } from '../../utils/formatAddress';
 import { formatValue } from '../../utils/formatValue';
@@ -13,7 +15,7 @@ import keyIcon from './../../assets/icons/key-icon.svg';
 import { useContext } from 'react';
 
 export const Navigation = () => {
-    const { account, ethBalance, tokenBalance, activateProvider } =
+    const { account, ethBalance, tokenBalance, activateProvider, deactivate } =
         useContext(WalletConnectContext);
 
     const activate = async () => {
@@ -62,6 +64,19 @@ export const Navigation = () => {
                                         ></img>
                                     </CopyToClipboard>
                                 </ButtonWithIcon>
+                            </div>
+                            <div className="ml-6">
+                                <button onClick={deactivate}>
+                                    <GradientBorder className="p-px flex justify-center items-center rounded-[32px]">
+                                        <div className="w-full h-full flex justify-center items-center rounded-[32px] bg-black-500 p-2">
+                                            <img
+                                                className="cursor-pointer"
+                                                src={cancelIcon}
+                                                alt="copy"
+                                            ></img>
+                                        </div>
+                                    </GradientBorder>
+                                </button>
                             </div>
                         </>
                     ) : (
