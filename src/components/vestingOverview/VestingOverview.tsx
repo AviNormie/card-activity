@@ -8,6 +8,7 @@ import { WalletConnectContext } from '../../context';
 import { Withdraw } from './withdraw/Withdraw';
 import { formatVestingScheduleData } from '../../utils/formatVestingScheduleData';
 import { useBeneficiaryOverview } from '../../hooks/use-beneficiary-overview';
+import { useTgeTimestamp } from '../../hooks/use-tge-timestamp';
 
 export const VestingOverview = () => {
     const { account, library } = useContext(WalletConnectContext);
@@ -17,6 +18,7 @@ export const VestingOverview = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [refresh, setRefresh] = useState(0);
     const { getBeneficiaryOverview } = useBeneficiaryOverview();
+    const { getTgeTimestamp } = useTgeTimestamp();
 
     useEffect(() => {
         const fetchData = async (library: JsonRpcProvider, account: string) => {
@@ -24,8 +26,11 @@ export const VestingOverview = () => {
                 library,
                 account,
             );
+            const tgeTimestamp = await getTgeTimestamp(library);
+
             const vestingSchedules = beneficiaryOverview.map(
-                (el: IBeneficiaryOverview) => formatVestingScheduleData(el),
+                (el: IBeneficiaryOverview) =>
+                    formatVestingScheduleData(el, tgeTimestamp),
             );
 
             setVestingSchedules(vestingSchedules);

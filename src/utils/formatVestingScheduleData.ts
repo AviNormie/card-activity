@@ -13,6 +13,7 @@ import { parseBigNumber } from './parseBigNumber';
 
 export const formatVestingScheduleData = (
     beneficiaryOverview: IBeneficiaryOverview,
+    tgeTimestamp: number,
 ): IVestingSchedule => {
     const { name } = beneficiaryOverview;
     const terms = parseBigNumber(
@@ -32,23 +33,25 @@ export const formatVestingScheduleData = (
         ASSET_LAKE.decimals,
     );
     const vestingRate = (allocatedAmount * terms) / duration;
-    const isUnlocked = isVestingScheduleUnlocked(cliff, duration);
+    const isUnlocked = isVestingScheduleUnlocked(cliff, duration, tgeTimestamp);
     return {
         name,
         terms,
         cliff,
         duration,
-        durationLeft: isUnlocked ? 0 : getDurationLeft(cliff, duration),
+        durationLeft: isUnlocked
+            ? 0
+            : getDurationLeft(cliff, duration, tgeTimestamp),
         durationProgress: isUnlocked
             ? 100
-            : getDurationProgress(cliff, duration),
+            : getDurationProgress(cliff, duration, tgeTimestamp),
         vestingRate,
         vestingRateAsString: isUnlocked
             ? 'FULLY VESTED'
             : `${vestingRate} $LAKE / ${getTermsAsString(terms)}`,
         unlockedAmount: isUnlocked
             ? allocatedAmount
-            : getUnlockedAmount(cliff, terms, vestingRate),
+            : getUnlockedAmount(cliff, terms, vestingRate, tgeTimestamp),
         isUnlocked,
         allocatedAmount,
         withdrawnAmount: parseBigNumber(
