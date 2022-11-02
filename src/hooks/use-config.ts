@@ -31,6 +31,15 @@ export const useConfig = () => {
         etherscanBaseURL: `https://api${
             chain === 'goerli' ? '-goerli' : ''
         }.etherscan.io/api`,
+        swapConvenienceFee:
+            100 *
+            (Number(process.env.REACT_APP_SWAP_CONVENIENCE_FEE) > 1
+                ? 1
+                : Number(process.env.REACT_APP_SWAP_CONVENIENCE_FEE)),
+        swapConvenienceFeeRecipient: {
+            [networks[chain].chainId]:
+                process.env.REACT_APP_SWAP_CONVENIENCE_FEE_RECIPIENT || '',
+        },
         getDappConfig,
     };
 };

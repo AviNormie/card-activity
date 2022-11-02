@@ -3,7 +3,7 @@ import { ReactNode, useContext, useState } from 'react';
 import { Button } from '../button/Button';
 import { GradientButton } from '../button/gradient/GradientButton';
 import { GradientButtonWithIcon } from '../button/gradient/GradientButtonWithIcon';
-import { SwapCustomWidget } from './SwapCustomWidget';
+import { SwapCustomWidget } from './swap/SwapCustomWidget';
 import { WalletConnectContext } from '../../context';
 import { WidgetBody } from './WidgetBody';
 import keyIcon from './../../assets/icons/key-icon.svg';
@@ -58,7 +58,7 @@ export const Widgets = () => {
             >
                 <div className="w-full flex justify-between">
                     {widgets.map((widget, index) => (
-                        <div className="flex flex-col w-[31%]">
+                        <div key={index} className="flex flex-col w-[31%]">
                             {widget.isOpen ? (
                                 <GradientButton
                                     size="huge"
