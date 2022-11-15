@@ -1,14 +1,17 @@
+import { ASSET_LP_TOKEN, ASSET_USDT } from '../../../constants/assets';
+
 import { colors } from '../../../constants/colors';
 import { formatValue } from '../../../utils/formatValue';
 import lakeLogo from './../../../assets/icons/lake-logo.svg';
+import lpTokenLogo from './../../../assets/icons/lp-token-logo.svg';
 import styled from 'styled-components';
 import usdtLogo from './../../../assets/icons/usdt-logo.svg';
 
 type Props = {
     tokenSymbol: string;
-    tokenPrice: number;
+    tokenPrice?: number;
     inputValue: number;
-    isValueValid: boolean;
+    isValueValid?: boolean;
     setMaxInputValue: () => void;
     onChange: (event: any) => void;
 };
@@ -27,12 +30,22 @@ export const TokenInput = ({
     return (
         <InputContainer className="w-full h-[7rem] flex justify-between pl-8 pr-2 pt-2 my-4">
             <div className="w-1/4 flex flex-col justify-center items-center mr-4">
-                <span className="text-sm tracking-[.1em] text-gray-300 mb-2">
+                <span className="text-sm tracking-[.1em] text-gray-300 mb-2 text-center">
                     {tokenSymbol}
                 </span>
                 <img
-                    className="w-[2.5rem] h-[2.5rem]"
-                    src={tokenSymbol === 'USDT' ? usdtLogo : lakeLogo}
+                    className={`w-[${
+                        tokenSymbol === ASSET_LP_TOKEN.symbol
+                            ? '3rem'
+                            : '2.5rem'
+                    }] h-[2.5rem]`}
+                    src={
+                        tokenSymbol === ASSET_USDT.symbol
+                            ? usdtLogo
+                            : tokenSymbol === ASSET_LP_TOKEN.symbol
+                            ? lpTokenLogo
+                            : lakeLogo
+                    }
                     alt="chart"
                 ></img>
             </div>
@@ -55,13 +68,15 @@ export const TokenInput = ({
                         </span>
                     </div>
 
-                    <span
-                        className={`font-kanit-medium whitespace-nowrap text-xs tracking-[.12em] ${
-                            !isValueValid && 'text-red-600'
-                        }`}
-                    >
-                        = {formatValue(inputValue * tokenPrice, '$', 2)}
-                    </span>
+                    {tokenPrice && (
+                        <span
+                            className={`font-kanit-medium whitespace-nowrap text-xs tracking-[.12em] ${
+                                !isValueValid && 'text-red-600'
+                            }`}
+                        >
+                            = {formatValue(inputValue * tokenPrice, '$', 2)}
+                        </span>
+                    )}
                 </div>
             </div>
         </InputContainer>
