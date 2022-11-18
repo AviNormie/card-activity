@@ -15,7 +15,7 @@ import cancelIcon from '../../../../assets/icons/cancel-icon.svg';
 import { colors } from '../../../../constants/colors';
 import { customModalStyle } from '../../../../constants/modal';
 import { formatValue } from '../../../../utils/formatValue';
-import { useUniswap } from '../../../../hooks/use-uniswap';
+import { useRemoveLiquidity } from '../../../../hooks/use-remove-liquidity';
 
 type Props = {
     isOpen: boolean;
@@ -53,8 +53,12 @@ export const RemoveLiquidityModal = ({
     const onRemoveLiquidityClick = async () => {
         if (library && account && selectedPosition) {
             setIsLiquidityRemoving(true);
-            const { removeLiquidity } = useUniswap(library);
-            await removeLiquidity(account, selectedPosition, inputValue);
+            await useRemoveLiquidity(
+                library,
+                account,
+                selectedPosition,
+                inputValue,
+            );
             setInputValue(0);
             setIsLiquidityRemoving(false);
             refreshPositions();

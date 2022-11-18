@@ -13,6 +13,7 @@ import { useLakeToken } from '../../../../hooks/use-lake-token';
 import { useUsdtToken } from '../../../../hooks/use-usdt-token';
 
 type Props = {
+    isNewPosition: boolean;
     tickLower: number;
     tickUpper: number;
     nearestTick: number;
@@ -29,6 +30,7 @@ type Props = {
 };
 
 export const Settings = ({
+    isNewPosition,
     tickLower,
     nearestTick,
     tickSpacing,
@@ -66,97 +68,113 @@ export const Settings = ({
 
     return (
         <SettingsContainer className="w-full flex flex-col p-4 my-4 font-kanit-medium whitespace-nowrap text-xs">
-            <div className="flex w-full justify-between">
-                <div className="tracking-[.12em] flex items-center">
-                    LOWER PRICE:
-                </div>
-                <div className="flex items-center mx-4">
-                    <button
-                        disabled={tickLower <= nearestTick - 10 * tickSpacing}
-                        onClick={decreaseTickLower}
-                    >
-                        <img
-                            className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-                            src={
-                                tickLower <= nearestTick - 10 * tickSpacing
-                                    ? minusGrayIcon
-                                    : minusIcon
-                            }
-                            alt="minus"
-                        />
-                    </button>
-                    <div className="color-gradient tracking-[.12em] text-2xl flex items-center mx-2">
-                        {lowerPrice}
-                    </div>
-                    <button
-                        disabled={tickLower >= nearestTick + 9 * tickSpacing}
-                        onClick={increaseTickLower}
-                    >
-                        <img
-                            className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-                            src={
-                                tickLower >= nearestTick + 9 * tickSpacing
-                                    ? plusGrayIcon
-                                    : plusIcon
-                            }
-                            alt="minus"
-                        />
-                    </button>
-                </div>
-                <div className="tracking-[.12em] ml-2 flex items-center">
-                    LAKE / USDT
-                </div>
-            </div>
-            <div className="flex w-full justify-between">
-                <div className="tracking-[.12em] flex items-center">
-                    UPPER PRICE:
-                </div>
-                <div className="flex items-center mx-4">
-                    <button
-                        disabled={tickUpper <= nearestTick - 9 * tickSpacing}
-                        onClick={decreaseTickUpper}
-                    >
-                        <img
-                            className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-                            src={
-                                tickUpper <= nearestTick - 9 * tickSpacing
-                                    ? minusGrayIcon
-                                    : minusIcon
-                            }
-                            alt="minus"
-                        />
-                    </button>
-                    <div className="color-gradient tracking-[.12em] text-2xl flex items-center mx-2">
-                        {upperPrice}
-                    </div>
-                    <button
-                        disabled={tickUpper >= nearestTick + 10 * tickSpacing}
-                        onClick={increaseTickUpper}
-                    >
-                        <img
-                            className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-                            src={
-                                tickUpper >= nearestTick + 10 * tickSpacing
-                                    ? plusGrayIcon
-                                    : plusIcon
-                            }
-                            alt="minus"
-                        />
-                    </button>
-                </div>
-                <div className="tracking-[.12em] ml-2 flex items-center">
-                    LAKE / USDT
-                </div>
-            </div>
-            <div className="flex w-full justify-center my-2">
-                <button onClick={onFullRangeClick}>
-                    <GradientBorderWithNoShadow className="w-[6rem] h-[1.5rem] p-px flex justify-center items-center rounded-[32px]">
-                        <div className="w-full h-full flex justify-center items-center rounded-[32px] bg-black-500 px-2">
-                            FULL RANGE
+            {isNewPosition && (
+                <div className="flex flex-col w-full">
+                    <div className="flex w-full justify-between">
+                        <div className="tracking-[.12em] flex items-center">
+                            LOWER PRICE:
                         </div>
-                    </GradientBorderWithNoShadow>
-                </button>
-            </div>
+                        <div className="flex items-center mx-4">
+                            <button
+                                disabled={
+                                    tickLower <= nearestTick - 10 * tickSpacing
+                                }
+                                onClick={decreaseTickLower}
+                            >
+                                <img
+                                    className="w-[1.5rem] h-[1.5rem] cursor-pointer"
+                                    src={
+                                        tickLower <=
+                                        nearestTick - 10 * tickSpacing
+                                            ? minusGrayIcon
+                                            : minusIcon
+                                    }
+                                    alt="minus"
+                                />
+                            </button>
+                            <div className="color-gradient tracking-[.12em] text-2xl flex items-center mx-2">
+                                {lowerPrice}
+                            </div>
+                            <button
+                                disabled={
+                                    tickLower >= nearestTick + 9 * tickSpacing
+                                }
+                                onClick={increaseTickLower}
+                            >
+                                <img
+                                    className="w-[1.5rem] h-[1.5rem] cursor-pointer"
+                                    src={
+                                        tickLower >=
+                                        nearestTick + 9 * tickSpacing
+                                            ? plusGrayIcon
+                                            : plusIcon
+                                    }
+                                    alt="minus"
+                                />
+                            </button>
+                        </div>
+                        <div className="tracking-[.12em] ml-2 flex items-center">
+                            LAKE / USDT
+                        </div>
+                    </div>
+                    <div className="flex w-full justify-between">
+                        <div className="tracking-[.12em] flex items-center">
+                            UPPER PRICE:
+                        </div>
+                        <div className="flex items-center mx-4">
+                            <button
+                                disabled={
+                                    tickUpper <= nearestTick - 9 * tickSpacing
+                                }
+                                onClick={decreaseTickUpper}
+                            >
+                                <img
+                                    className="w-[1.5rem] h-[1.5rem] cursor-pointer"
+                                    src={
+                                        tickUpper <=
+                                        nearestTick - 9 * tickSpacing
+                                            ? minusGrayIcon
+                                            : minusIcon
+                                    }
+                                    alt="minus"
+                                />
+                            </button>
+                            <div className="color-gradient tracking-[.12em] text-2xl flex items-center mx-2">
+                                {upperPrice}
+                            </div>
+                            <button
+                                disabled={
+                                    tickUpper >= nearestTick + 10 * tickSpacing
+                                }
+                                onClick={increaseTickUpper}
+                            >
+                                <img
+                                    className="w-[1.5rem] h-[1.5rem] cursor-pointer"
+                                    src={
+                                        tickUpper >=
+                                        nearestTick + 10 * tickSpacing
+                                            ? plusGrayIcon
+                                            : plusIcon
+                                    }
+                                    alt="minus"
+                                />
+                            </button>
+                        </div>
+                        <div className="tracking-[.12em] ml-2 flex items-center">
+                            LAKE / USDT
+                        </div>
+                    </div>
+                    <div className="flex w-full justify-center my-2">
+                        <button onClick={onFullRangeClick}>
+                            <GradientBorderWithNoShadow className="w-[6rem] h-[1.5rem] p-px flex justify-center items-center rounded-[32px]">
+                                <div className="w-full h-full flex justify-center items-center rounded-[32px] bg-black-500 px-2">
+                                    FULL RANGE
+                                </div>
+                            </GradientBorderWithNoShadow>
+                        </button>
+                    </div>
+                </div>
+            )}
             <div className="flex w-full justify-between">
                 <div className="tracking-[.12em] flex items-center">
                     SLIPPAGE TOLERANCE:

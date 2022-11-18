@@ -1,13 +1,10 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { useLakeCirculationSupply } from './use-lake-circulation-supply';
-import { useUniswap } from './use-uniswap';
+import { useLakePrice } from './use-lake-price';
 
 export const useLakeStats = async (provider: JsonRpcProvider) => {
-    const { getLakePrice } = useUniswap(provider);
-    const lakePrice = await getLakePrice();
-
+    const lakePrice = await useLakePrice(provider);
     const circulationSupply = await useLakeCirculationSupply(provider);
-
     return {
         marketCup: circulationSupply * lakePrice,
         circulationSupply,

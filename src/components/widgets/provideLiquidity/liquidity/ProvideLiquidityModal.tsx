@@ -33,9 +33,10 @@ import { nearestUsableTick } from '@uniswap/v3-sdk';
 import { parseBigNumber } from '../../../../utils/parseBigNumber';
 import settingsIcon from './../../../../assets/icons/settings-icon.svg';
 import { useConfig } from '../../../../hooks/use-config';
+import { useLakePrice } from '../../../../hooks/use-lake-price';
 import { usePoolContract } from '../../../../hooks/use-pool-contract';
+import { useProvideLiquidity } from '../../../../hooks/use-provide-liquidity';
 import { useTokenAllowance } from '@usedapp/core';
-import { useUniswap } from '../../../../hooks/use-uniswap';
 
 type Props = {
     isOpen: boolean;
@@ -83,6 +84,7 @@ export const ProvideLiquidityModal = ({
     const [isLakeApproving, setIsLakeApproving] = useState(false);
     const [isLiquidityProviding, setIsLiquidityProviding] = useState(false);
     const [areSettingsOpen, setAreSettingsOpen] = useState(false);
+    const [isNewPosition, setIsNewPosition] = useState(false);
     const usdtAllowance = useTokenAllowance(
         usdtAddress,
         account,
@@ -102,8 +104,7 @@ export const ProvideLiquidityModal = ({
 
     useEffect(() => {
         const fetchData = async (library: JsonRpcProvider) => {
-            const { getLakePrice } = useUniswap(library);
-            setLakePrice(await getLakePrice());
+            setLakePrice(await useLakePrice(library));
         };
 
         if (library) {
@@ -197,8 +198,8 @@ export const ProvideLiquidityModal = ({
     const onProvideLiquidityClick = async () => {
         if (library && account) {
             setIsLiquidityProviding(true);
-            const { provideLiquidity } = useUniswap(library);
-            await provideLiquidity(
+            await useProvideLiquidity(
+                library,
                 usdtInputValue,
                 lakeInputValue,
                 slippageTolerance,
@@ -219,6 +220,7 @@ export const ProvideLiquidityModal = ({
         setSelectedPosition(undefined);
         setStep(1);
         setAreSettingsOpen(false);
+        setIsNewPosition(false);
         closeModal();
     };
 
@@ -279,6 +281,7 @@ export const ProvideLiquidityModal = ({
                             )}
                             {areSettingsOpen && (
                                 <Settings
+                                    isNewPosition={isNewPosition}
                                     tickLower={tickLower}
                                     tickUpper={tickUpper}
                                     nearestTick={nearestTick}
@@ -393,7 +396,10 @@ export const ProvideLiquidityModal = ({
                                             size="medium"
                                             disabled={false}
                                             text="NEW POSITION"
-                                            onClick={() => setStep(2)}
+                                            onClick={() => {
+                                                setStep(2);
+                                                setIsNewPosition(true);
+                                            }}
                                         />
                                     </div>
                                 ) : (

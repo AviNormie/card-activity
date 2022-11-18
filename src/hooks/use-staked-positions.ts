@@ -17,15 +17,16 @@ export const useStakedPositions = async (
             stakingAbi,
             provider.getSigner(account),
         );
-        const positionIds = await stakingContract.callStatic.stakedBalance(
-            account,
-        );
-        positionIds.forEach(async (id: number) => {
-            const position = await usePositionById(provider, id);
-            if (position) {
-                stakedPositions.push(position);
-            }
-        });
+        const positionIds: number[] =
+            await stakingContract.callStatic.stakedBalance(account);
+        if (positionIds.length > 0) {
+            positionIds.forEach(async (id: number) => {
+                const position = await usePositionById(provider, id);
+                if (position) {
+                    stakedPositions.push(position);
+                }
+            });
+        }
     } catch (e) {
         console.error('Failed to get staked positions', e);
     }
