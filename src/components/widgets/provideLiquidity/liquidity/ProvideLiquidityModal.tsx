@@ -158,6 +158,17 @@ export const ProvideLiquidityModal = ({
         setStep(!!selectedPosition ? 2 : 1);
     }, [selectedPosition]);
 
+    useEffect(() => {
+        setDefaultSettings();
+    }, [areSettingsOpen]);
+
+    const setDefaultSettings = () => {
+        setSlippageTolerance(DEFAULT_SLIPPAGE_TOLERANCE);
+        setTransactionDeadline(DEFAULT_TRANSACTION_DEADLINE);
+        setTickLower(-MAX_TICK);
+        setTickUpper(MAX_TICK);
+    };
+
     const onUsdtValueChange = (value: number) => {
         setUsdtInputValue(value);
         setIsUsdtValueValid(value <= usdtBalance);

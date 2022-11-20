@@ -63,6 +63,15 @@ export const RemoveLiquidityModal = ({
         setSelectedPosition(undefined);
     }, [positions]);
 
+    useEffect(() => {
+        setDefaultSettings();
+    }, [areSettingsOpen]);
+
+    const setDefaultSettings = () => {
+        setSlippageTolerance(DEFAULT_SLIPPAGE_TOLERANCE);
+        setTransactionDeadline(DEFAULT_TRANSACTION_DEADLINE);
+    };
+
     const onRemoveLiquidityClick = async () => {
         if (library && account && selectedPosition) {
             setIsLiquidityRemoving(true);
