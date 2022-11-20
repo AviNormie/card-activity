@@ -5,6 +5,7 @@ import {
     DEFAULT_TRANSACTION_DEADLINE,
     MAX_TICK,
     REFRESH_LAKE_PRICE_INTERVAL,
+    TICKS_RANGE,
 } from '../../../../constants/commons';
 import {
     Immutables,
@@ -294,7 +295,7 @@ export const ProvideLiquidityModal = ({
                                         setTickLower(
                                             tickLower === -MAX_TICK
                                                 ? nearestTick -
-                                                      10 *
+                                                      (TICKS_RANGE / 2) *
                                                           immutables!
                                                               .tickSpacing
                                                 : tickLower +
@@ -315,7 +316,7 @@ export const ProvideLiquidityModal = ({
                                         setTickUpper(
                                             tickUpper === MAX_TICK
                                                 ? nearestTick +
-                                                      10 *
+                                                      (TICKS_RANGE / 2) *
                                                           immutables!
                                                               .tickSpacing
                                                 : tickUpper -

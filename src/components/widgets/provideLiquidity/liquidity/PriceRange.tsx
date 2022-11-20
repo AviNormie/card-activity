@@ -1,7 +1,7 @@
+import { MAX_TICK, TICKS_RANGE } from '../../../../constants/commons';
 import { useEffect, useState } from 'react';
 
 import { GradientBorderWithNoShadow } from '../../../GradientBorder';
-import { MAX_TICK } from '../../../../constants/commons';
 import minusGrayIcon from '../../../../assets/icons/minus-gray-icon.svg';
 import minusIcon from '../../../../assets/icons/minus-icon.svg';
 import plusGrayIcon from '../../../../assets/icons/plus-gray-icon.svg';
@@ -62,13 +62,17 @@ export const PriceRange = ({
                 </div>
                 <div className="flex items-center mx-4">
                     <button
-                        disabled={tickLower <= nearestTick - 10 * tickSpacing}
+                        disabled={
+                            tickLower <=
+                            nearestTick - (TICKS_RANGE / 2) * tickSpacing
+                        }
                         onClick={decreaseTickLower}
                     >
                         <img
                             className="w-[1.5rem] h-[1.5rem] cursor-pointer"
                             src={
-                                tickLower <= nearestTick - 10 * tickSpacing
+                                tickLower <=
+                                nearestTick - (TICKS_RANGE / 2) * tickSpacing
                                     ? minusGrayIcon
                                     : minusIcon
                             }
@@ -79,13 +83,18 @@ export const PriceRange = ({
                         {lowerPrice}
                     </div>
                     <button
-                        disabled={tickLower >= nearestTick + 9 * tickSpacing}
+                        disabled={
+                            tickLower >=
+                            nearestTick + (TICKS_RANGE / 2 - 1) * tickSpacing
+                        }
                         onClick={increaseTickLower}
                     >
                         <img
                             className="w-[1.5rem] h-[1.5rem] cursor-pointer"
                             src={
-                                tickLower >= nearestTick + 9 * tickSpacing
+                                tickLower >=
+                                nearestTick +
+                                    (TICKS_RANGE / 2 - 1) * tickSpacing
                                     ? plusGrayIcon
                                     : plusIcon
                             }
@@ -103,13 +112,18 @@ export const PriceRange = ({
                 </div>
                 <div className="flex items-center mx-4">
                     <button
-                        disabled={tickUpper <= nearestTick - 9 * tickSpacing}
+                        disabled={
+                            tickUpper <=
+                            nearestTick - (TICKS_RANGE / 2 - 1) * tickSpacing
+                        }
                         onClick={decreaseTickUpper}
                     >
                         <img
                             className="w-[1.5rem] h-[1.5rem] cursor-pointer"
                             src={
-                                tickUpper <= nearestTick - 9 * tickSpacing
+                                tickUpper <=
+                                nearestTick -
+                                    (TICKS_RANGE / 2 - 1) * tickSpacing
                                     ? minusGrayIcon
                                     : minusIcon
                             }
@@ -120,13 +134,17 @@ export const PriceRange = ({
                         {upperPrice}
                     </div>
                     <button
-                        disabled={tickUpper >= nearestTick + 10 * tickSpacing}
+                        disabled={
+                            tickUpper >=
+                            nearestTick + (TICKS_RANGE / 2) * tickSpacing
+                        }
                         onClick={increaseTickUpper}
                     >
                         <img
                             className="w-[1.5rem] h-[1.5rem] cursor-pointer"
                             src={
-                                tickUpper >= nearestTick + 10 * tickSpacing
+                                tickUpper >=
+                                nearestTick + (TICKS_RANGE / 2) * tickSpacing
                                     ? plusGrayIcon
                                     : plusIcon
                             }

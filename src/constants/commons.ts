@@ -3,6 +3,7 @@ export const DEFAULT_ROUNDING = 8;
 export const REFRESH_STATS_INTERVAL = 180000;
 export const REFRESH_LAKE_PRICE_INTERVAL = 60000;
 export const MAX_TICK = 887220;
+export const TICKS_RANGE = 60;
 export const DEFAULT_TRANSACTION_DEADLINE = 30;
 export const DEFAULT_SLIPPAGE_TOLERANCE = 0.5;
 export const BLOCKS_PER_DAY = 5 * 60 * 24;
