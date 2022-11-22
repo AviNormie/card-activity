@@ -6,10 +6,10 @@ export const getDurationProgress = (
     terms: number,
     tgeTimestamp: number,
 ): number => {
-    return (
+    const durationProgress =
         ((new Date().getTime() / 1000 - tgeTimestamp) * 100) /
-        (cliff + duration * terms)
-    );
+        (cliff + duration * terms);
+    return durationProgress > 0 ? durationProgress : 0;
 };
 
 export const getDurationLeft = (
