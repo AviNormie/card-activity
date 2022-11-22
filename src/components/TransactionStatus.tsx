@@ -1,8 +1,8 @@
+import { FadeLoader } from 'react-spinners';
 import { GradientBorderWithNoShadow } from './GradientBorder';
 import { colors } from '../constants/colors';
 import failedTransaction from '../assets/icons/failed-transaction.svg';
 import { networks } from '../constants/networks';
-import pendingTransaction from '../assets/icons/pending-transaction.svg';
 import successfulTransaction from '../assets/icons/successful-transaction.svg';
 import { useConfig } from '../hooks/use-config';
 
@@ -16,17 +16,27 @@ export const TransactionStatus = ({ status, transactionHash }: Props) => {
     const { chainId } = useConfig();
     return (
         <div className="w-full flex flex-col px-4 py-6 items-center">
-            <img
-                className="w-[2.5rem] h-[2.5rem]"
-                src={
-                    status === 'PENDING'
-                        ? pendingTransaction
-                        : status === 'SUCCESSFUL'
-                        ? successfulTransaction
-                        : failedTransaction
-                }
-                alt="transaction"
-            ></img>
+            {status === 'PENDING' ? (
+                <FadeLoader
+                    color={colors.pink[600]}
+                    loading
+                    radius={1}
+                    width={4}
+                    height={12}
+                    margin={0}
+                    cssOverride={{ height: '2.5rem' }}
+                />
+            ) : (
+                <img
+                    className="w-[2.5rem] h-[2.5rem]"
+                    src={
+                        status === 'SUCCESSFUL'
+                            ? successfulTransaction
+                            : failedTransaction
+                    }
+                    alt="transaction"
+                ></img>
+            )}
             <span className="tracking-[.1em] text-base font-kanit-regular color-gray-gradient text-shadow my-4 whitespace-nowrap">
                 TRANSACTION {status}
             </span>
