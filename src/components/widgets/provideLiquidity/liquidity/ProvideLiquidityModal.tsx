@@ -151,11 +151,10 @@ export const ProvideLiquidityModal = ({
 
     useEffect(() => {
         setSelectedPosition(undefined);
-        setStep(positions.length > 0 ? 1 : 2);
     }, [positions]);
 
     useEffect(() => {
-        setStep(!!selectedPosition ? 2 : 1);
+        setStep(!!selectedPosition || positions.length === 0 ? 2 : 1);
     }, [selectedPosition]);
 
     useEffect(() => {
@@ -232,7 +231,6 @@ export const ProvideLiquidityModal = ({
 
     const onCloseClick = () => {
         setSelectedPosition(undefined);
-        setStep(1);
         setAreSettingsOpen(false);
         setIsNewPosition(false);
         closeModal();
