@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { ClipLoader } from 'react-spinners';
 import { FirstStep } from './FirstStep';
-import { IPool } from '../../../../interfaces/pool.interface';
-import { IPositionDetails } from '../../../../interfaces/positionDetails.interface';
+import { IPool } from '../../../../../interfaces/pool.interface';
+import { IPositionDetails } from '../../../../../interfaces/positionDetails.interface';
 import ReactModal from 'react-modal';
 import { SecondStep } from './SecondStep';
-import cancelIcon from './../../../../assets/icons/cancel-icon.svg';
-import { colors } from '../../../../constants/colors';
-import { customModalStyle } from '../../../../constants/modal';
-import { useConfig } from '../../../../hooks/use-config';
+import cancelIcon from './../../../../../assets/icons/cancel-icon.svg';
+import { colors } from '../../../../../constants/colors';
+import { customModalStyle } from '../../../../../constants/modal';
+import { useConfig } from '../../../../../hooks/use-config';
 
 type Props = {
     isOpen: boolean;
@@ -39,10 +39,11 @@ export const ProvideLiquidityModal = ({
 
     useEffect(() => {
         setSelectedPosition(undefined);
+        setStep(positions.length === 0 ? 2 : 1);
     }, [positions]);
 
     useEffect(() => {
-        setStep(positions.length === 0 || !!selectedPosition ? 2 : 1);
+        setStep(!!selectedPosition ? 2 : 1);
         const pool = getPool(
             !!selectedPosition ? selectedPosition.tokenAddress : ethAddress,
             lakeAddress,

@@ -5,7 +5,7 @@ import { Button } from '../../button/Button';
 import { GradientButton } from '../../button/gradient/GradientButton';
 import { IPositionDetails } from '../../../interfaces/positionDetails.interface';
 import { JsonRpcProvider } from '@ethersproject/providers';
-import { ProvideLiquidityModal } from './liquidity/ProvideLiquidityModal';
+import { ProvideLiquidityModal } from './liquidity/provide/ProvideLiquidityModal';
 import { RemoveLiquidityModal } from './liquidity/RemoveLiquidityModal';
 import { WalletConnectContext } from '../../../context';
 import { formatValue } from '../../../utils/formatValue';

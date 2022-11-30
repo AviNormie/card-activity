@@ -1,38 +1,38 @@
-import { ASSETS, ASSET_LAKE } from '../../../../constants/assets';
+import { ASSETS, ASSET_LAKE } from '../../../../../constants/assets';
 import { BigNumber, Contract } from 'ethers';
 import {
     DEFAULT_SLIPPAGE_TOLERANCE,
     DEFAULT_TRANSACTION_DEADLINE,
     MAX_TICK,
     TICKS_RANGE,
-} from '../../../../constants/commons';
+} from '../../../../../constants/commons';
 import {
     Immutables,
     getPoolImmutables,
     getPoolState,
-} from '../../../../hooks/use-uniswap-pool';
+} from '../../../../../hooks/use-uniswap-pool';
 import { useContext, useEffect, useState } from 'react';
 import { useTokenAllowance, useTokenBalance } from '@usedapp/core';
 
-import { Button } from '../../../button/Button';
-import { ButtonWithSpinner } from '../../../button/ButtonWithSpinner';
-import { ERC20Abi } from '../../../../abis/ERC20';
-import { GradientButton } from '../../../button/gradient/GradientButton';
-import { GradientButtonWithSpinner } from '../../../button/gradient/GradientButtonWithSpinner';
-import { IPool } from '../../../../interfaces/pool.interface';
-import { IPositionDetails } from '../../../../interfaces/positionDetails.interface';
+import { Button } from '../../../../button/Button';
+import { ButtonWithSpinner } from '../../../../button/ButtonWithSpinner';
+import { ERC20Abi } from '../../../../../abis/ERC20';
+import { GradientButton } from '../../../../button/gradient/GradientButton';
+import { GradientButtonWithSpinner } from '../../../../button/gradient/GradientButtonWithSpinner';
+import { IPool } from '../../../../../interfaces/pool.interface';
+import { IPositionDetails } from '../../../../../interfaces/positionDetails.interface';
 import { JsonRpcProvider } from '@ethersproject/providers';
-import { Settings } from './Settings';
-import { TokenInput } from '../TokenInput';
-import { WalletConnectContext } from '../../../../context';
+import { Settings } from '../Settings';
+import { TokenInput } from '../../TokenInput';
+import { WalletConnectContext } from '../../../../../context';
 import { nearestUsableTick } from '@uniswap/v3-sdk';
-import { parseBigNumber } from '../../../../utils/parseBigNumber';
-import settingsIcon from './../../../../assets/icons/settings-icon.svg';
-import { useConfig } from '../../../../hooks/use-config';
-import { useLakeUsdtPrice } from '../../../../hooks/use-lake-usdt-price';
-import { usePoolContract } from '../../../../hooks/use-pool-contract';
-import { useProvideLiquidity } from '../../../../hooks/use-provide-liquidity';
-import { useTokenUsdtPrice } from '../../../../hooks/use-token-usdt-price';
+import { parseBigNumber } from '../../../../../utils/parseBigNumber';
+import settingsIcon from './../../../../../assets/icons/settings-icon.svg';
+import { useConfig } from '../../../../../hooks/use-config';
+import { useLakeUsdtPrice } from '../../../../../hooks/use-lake-usdt-price';
+import { usePoolContract } from '../../../../../hooks/use-pool-contract';
+import { useProvideLiquidity } from '../../../../../hooks/use-provide-liquidity';
+import { useTokenUsdtPrice } from '../../../../../hooks/use-token-usdt-price';
 
 type Props = {
     pool: IPool;

@@ -1,6 +1,6 @@
-import { Button } from '../../../button/Button';
-import { IPositionDetails } from '../../../../interfaces/positionDetails.interface';
-import { PositionsList } from '../PositionsList';
+import { Button } from '../../../../button/Button';
+import { IPositionDetails } from '../../../../../interfaces/positionDetails.interface';
+import { PositionsList } from '../../PositionsList';
 
 type Props = {
     positions: IPositionDetails[];

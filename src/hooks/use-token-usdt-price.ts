@@ -10,9 +10,9 @@ export const useTokenUsdtPrice = async (
     const { usdtAddress } = useConfig();
     const pool = await useUniswapPool(
         provider,
-        tokenAddress,
         usdtAddress,
+        tokenAddress,
         blockTag,
     );
-    return Number(pool.token0Price.toSignificant());
+    return Number(pool.token1Price.toSignificant());
 };

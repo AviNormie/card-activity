@@ -9,8 +9,8 @@ export const useLakeEthPrice = async (
     const { lakeAddress, ethAddress } = useConfig();
     const pool = await useUniswapPool(
         provider,
-        lakeAddress,
         ethAddress,
+        lakeAddress,
         blockTag,
     );
     return Number(pool.token1Price.toSignificant());
