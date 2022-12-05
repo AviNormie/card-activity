@@ -88,15 +88,23 @@ export const Footer = () => {
                     }
                 ></img>
             </div>
-            <div className="flex flex-col items-center tracking-[.1em] text-xl font-kanit-light color-gray-gradient text-shadow">
+            <div className="flex flex-col items-center tracking-[.1em] text-lg font-kanit-light color-gray-gradient text-shadow">
                 <a
-                    className="my-2 cursor-pointer"
+                    className="my-1 cursor-pointer"
                     href="mailto:office@data-lake.co"
                 >
                     CONTACT US
                 </a>
                 <Link
-                    className="my-2 cursor-pointer"
+                    className="my-1 cursor-pointer"
+                    to="/cookies"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    COOKIES
+                </Link>
+                <Link
+                    className="my-1 cursor-pointer"
                     to="/privacy-policy"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -104,7 +112,7 @@ export const Footer = () => {
                     PRIVACY POLICY
                 </Link>
                 <Link
-                    className="my-2 cursor-pointer"
+                    className="my-1 cursor-pointer"
                     to="/terms-and-conditions"
                     target="_blank"
                     rel="noopener noreferrer"
