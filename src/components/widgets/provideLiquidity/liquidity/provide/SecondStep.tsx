@@ -11,7 +11,7 @@ import {
     getPoolState,
 } from '../../../../../hooks/use-uniswap-pool';
 import { useContext, useEffect, useState } from 'react';
-import { useTokenAllowance, useTokenBalance } from '@usedapp/core';
+import { useTokenAllowance, useEtherBalance } from '@usedapp/core';
 
 import { Button } from '../../../../button/Button';
 import { ButtonWithSpinner } from '../../../../button/ButtonWithSpinner';
@@ -81,12 +81,7 @@ export const SecondStep = ({
     const [isTokenApproving, setIsTokenApproving] = useState(false);
     const [isLakeApproving, setIsLakeApproving] = useState(false);
     const [isLiquidityProviding, setIsLiquidityProviding] = useState(false);
-    const tokenBalanceAsBigNumber = useTokenBalance(tokenAddress, account);
-    const tokenAllowance = useTokenAllowance(
-        tokenAddress,
-        account,
-        nonfungiblePositionManagerAddress,
-    );
+    const tokenBalanceAsBigNumber = useEtherBalance(account);
     const lakeAllowance = useTokenAllowance(
         lakeAddress,
         account,
@@ -146,9 +141,9 @@ export const SecondStep = ({
 
     useEffect(() => {
         setIsTokenApproved(
-            (!!tokenAllowance &&
-                !!pool &&
-                parseBigNumber(tokenAllowance, tokenDecimals) >=
+            (!!pool &&
+                !!tokenBalanceAsBigNumber &&
+                parseBigNumber(tokenBalanceAsBigNumber, tokenDecimals) >=
                     tokenInputValue) ||
                 tokenInputValue === 0,
         );

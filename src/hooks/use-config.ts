@@ -1,6 +1,7 @@
 import {
     LAKE_ADDRESS,
     NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
+    UNISWAP_V3_STAKER_ADDRESSES,
     USDT_ADDRESS,
     VESTING_ADDRESS,
     WETH_ADDRESS,
@@ -62,8 +63,10 @@ export const useConfig = () => {
     const getPool = (token0: string, token1: string): IPool | undefined =>
         pools.find(
             (el) =>
-                el.token0.address.toLowerCase() === token0.toLowerCase() &&
-                el.token1.address.toLowerCase() === token1.toLowerCase(),
+                (el.token1.address.toLowerCase() === token0.toLowerCase() &&
+                    el.token0.address.toLowerCase() === token1.toLowerCase()) ||
+                (el.token0.address.toLowerCase() === token0.toLowerCase() &&
+                    el.token1.address.toLowerCase() === token1.toLowerCase()),
         );
 
     return {
@@ -74,7 +77,11 @@ export const useConfig = () => {
         vestingScheduleAddress:
             process.env.REACT_APP_VESTING_ADDRESS || VESTING_ADDRESS,
         nonfungiblePositionManagerAddress:
+            process.env.REACT_APP_NONFUNGIBLE_POSITION_MANAGER_ADDRESSES ||
             NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
+        uniswapV3StakerAddress:
+            process.env.REACT_APP_UNISWAP_V3_STAKER_ADDRESSES ||
+            UNISWAP_V3_STAKER_ADDRESSES,
         poolDeploymentBlockNumber: Number(
             process.env.REACT_APP_POOL_DEPLOYMENT_BLOCK_NUMBER,
         ),
