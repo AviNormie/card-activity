@@ -1,6 +1,6 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { useConfig } from './use-config';
-import { Contract } from 'ethers';
+import { Contract, utils } from 'ethers';
 import { END_TIME, START_TIME } from '../constants/mainnet';
 import { uniswapV3StakerAbi } from '../abis/uniswapV3Staker';
 
@@ -16,22 +16,17 @@ export const useUnstake = async (
         uniswapV3StakerAbi,
         provider.getSigner(),
     );
-
-    const unstakeTxn = await stakerContract.unstakeToken(
-        {
-            rewardToken: lakeAddress,
-            pool: poolAddress,
-            startTime: START_TIME,
-            endTime: END_TIME,
-            refundee: account,
-        },
+    const IStakerContract = new utils.Interface(uniswapV3StakerAbi);
+    const unstakeData = IStakerContract.encodeFunctionData('unstakeToken', [
+        [lakeAddress, poolAddress, START_TIME, END_TIME, account],
         tokenId,
-    );
-    await unstakeTxn.wait();
-    const withdrawTxn = await stakerContract.withdrawToken(
+    ]);
+    const withdrawData = IStakerContract.encodeFunctionData('withdrawToken', [
         tokenId,
         account,
         '0x',
-    );
-    await withdrawTxn.wait();
+    ]);
+
+    const txn = await stakerContract.multicall([unstakeData, withdrawData]);
+    await txn.wait();
 };
